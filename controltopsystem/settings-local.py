@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c11!k8_3d=hdloytb7(u1jfdxbeod-mh&lo6*)!0bdr55oarq('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*', 'www.controltopsystem.kinghost.net']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 
 # Application definition
@@ -81,12 +81,8 @@ WSGI_APPLICATION = 'controltopsystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'synthdecor',
-        'USER': 'synthdecor',
-        'PASSWORD': 'synth2018decor',
-        'HOST': 'mysql.synthdecor.com.br',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
