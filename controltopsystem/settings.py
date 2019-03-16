@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'controltopsystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'synthdecor',
-        'USER': 'synthdecor',
-        'PASSWORD': 'synth2018decor',
-        'HOST': 'mysql.synthdecor.com.br',
+        'NAME': 'controltopsyst',
+        'USER': 'controltopsyst',
+        'PASSWORD': 'Carlos1996'
+        'HOST': 'mysql.controltopsystem.kinghost.net',
         'PORT': '3306',
     }
 }
