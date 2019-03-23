@@ -17,9 +17,12 @@ class Product(models.Model):
     warranty = models.CharField('Garantia', max_length=2)
     category = models.CharField('Categoria', choices=CATEGORY_CHOICES, default='outros', max_length=15)
 
+    created = models.DateTimeField('Criado em', auto_now_add=True)
+    modified = models.DateTimeField('Modificado em', auto_now=True)
+
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
         
     def __str__(self):
-        return "{} - {}".format(self.name, self.category)
+        return "{}".format(self.name)

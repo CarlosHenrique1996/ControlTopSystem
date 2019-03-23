@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'controltopsyst',
         'USER': 'controltopsyst',
-        'PASSWORD': 'Carlos1996',
+        'PASSWORD': 'carlos452535',
         'HOST': 'mysql.controltopsystem.kinghost.net',
         'PORT': '3306',
     }
@@ -113,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # LOGIN_URL = 'login'
 # LOGIN_REDIRECT_URL = 'index'
 # LOGOUT_URL = 'logout'
-AUTH_USER_MODEL = 'accounts.UserOffice'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
