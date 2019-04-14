@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.col-md-6 {
+    margin: 0;
+    padding: 0;
+}
+.search_content_mobile {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.search_content {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+.search_content_mobile > p {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color:#000;
+    text-align: center;
+}
+.search_content_laptop > p {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color:#000;
+    text-align: center;
+}
+.search_content_acessories > p {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color:#000;
+    text-align: center;
+}
+.search_content_others > p {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color:#000;
+    text-align: center;
+}
+
+.content {
+    background-color: #fff;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
+    text-align: center;
+    cursor: pointer;
+    margin: 10px 0;
+}
+.sales_content {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 70px;
+}
+.sales_content > p {
+    text-align: center;
+}
+.fa-mobile-alt {
+    font-size: 50px;
+    color: #000;
+}
+.fa-laptop-code{
+    font-size: 50px;
+    color: #000;
+}
+.fa-keyboard{
+    font-size: 50px;
+    color: #000;
+}
+.fa-clone {
+    font-size: 50px;
+    color: #000;
+}
+
+#search_mobile_submit {
+    margin-top: 10px;
+}
+#search_laptop_submit {
+    margin-top: 10px;
+}
+#search_acessories_submit {
+    margin-top: 10px;
+}
+#search_others_submit {
+    margin-top: 10px;
+}
+.btn-check {
+    background-color: green;
+    border-radius: 5px;
+    border: transparent;
+    padding: 10px;
+    color: #fff;
+    margin-top: -8px;
+}
+#quantity_product {
+    background-color: transparent;
+}
+.form_submit {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+#fa-mobile, #fa-laptop, #fa-keyboard, #fa-clone {
+    cursor: pointer;
+    padding: 20px;
+}
+#fa-mobile:hover, #fa-laptop:hover, #fa-keyboard:hover, #fa-clone:hover {
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
+    border-radius: 20px;
+
+}
+.checkout_button {
+        padding: 10px;
+        margin-bottom: 60px;
+        display: flex;
+        justify-content: center;
+    }
+.checkout_button > a {
+    background-color: green;
+    color: #fff;
+    border: transparent;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    width: 25%;
+    margin: 0 auto;
+}
+</style>
+
+<div class="container">
+    <div class="sales_content">
+        <div class="row">
+            <div class="col-md-3">
+                <div id="fa-mobile">
+                    <p><i class="fas fa-mobile-alt"></i></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="fa-laptop">
+                    <p><i class="fas fa-laptop-code"></i></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="fa-keyboard">
+                    <p><i class="fas fa-keyboard"></i></p>  
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="fa-clone">
+                    <p><i class="far fa-clone"></i></p>    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content_mobile" style="display: none;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search_content_mobile">
+                    <p>Olá, qual o modelo que você procura?</p>
+                    <form role="search" action="{% url 'sales:sales_view' %}">        
+                        <input name="search_mobile" type="text" class="form-control" id="search_mobile" placeholder="Procure um celular...">
+                        <input type="submit" class="form-control" value="Pesquisar" id="search_mobile_submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        {% if search_mobile %}
+        <div class="form_submit">
+            <form action="" method="post">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="margin-top: 8px;">Nome:</th>
+                                <th style="margin-top: 8px;">Preço:</th>
+                                <th style="margin-top: 8px;">Garantia: </th>
+                                <th style="margin-top: 8px;">Estoque (qtd):</th>
+                                <th style="width: 10%;"></th>
+                                <th style="width: 10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mobile in list_mobile %}
+                            <tr>
+                                <th>{{ mobile.name }}</th>
+                                <th>{{ mobile.price }}</th>
+                                <th>{{ mobile.warranty }}</th>
+                                <th>{{ mobile.quantity }}</th>
+                                <th>
+                                    <input type="text" class="form-control" id="quantity_product" style="margin-top: -8px;">
+                                </th>
+                                <th>
+                                    <input type="hidden" value="{{ mobile.pk }}" id="mobile_pk">
+                                    <input href="#" class="btn-check" type="submit" id="{{ mobile.pk }}-create_bag_submit" value="adicionar">
+                                </th>
+                            </tr>
+                            <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                            <script type="text/javascript">
+                                $('#{{ mobile.pk }}-create_bag_submit').on('click', function(e){
+                                    e.preventDefault();
+                                    var bag_data = {
+                                        'mobile_pk': $('#mobile_pk').val(),
+                                        'quantity': $('#quantity_product').val()
+                                    }
+                                    $.ajax({
+                                        url: "{% url 'sales:create_bag_mobile' %}",
+                                        type: 'POST',
+                                        contentType: 'application/json',
+                                        data: JSON.stringify(bag_data),
+                                        success: function(data){
+                                            console.log(data);
+                                        },
+                                        error: function(data){
+                                            console.log(data);
+                                        }
+                                    })
+                                });
+                            </script>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+                <div class="checkout_button">
+                    <a href="{% url 'sales:bag_list' %}" class="form-control">IR PRA SACOLA</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+$('#fa-mobile').on('click', function(e){
+    if ($("#content_mobile").is(":visible")){
+        e.preventDefault();
+        $("#content_mobile").hide();
+    } else {
+        e.preventDefault();
+        $("#content_mobile").show();
+    }
+});
+
+$('#fa-laptop').on('click', function(){
+    
+});
+$('#fa-keyboard').on('click', function(){
+    
+});
+$('#fa-clone').on('click', function(){
+    
+});
+</script>
+{% endblock %}
+
+

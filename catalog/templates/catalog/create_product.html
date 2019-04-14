@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @keyframes spin {
+        to { transform: rotate(360deg);}
+    }
+    .spinner {
+        border: 8px solid rgb(180, 180, 180);
+        border-left-color: #fff;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        float: left;
+        animation: spin 1.2s linear infinite;
+    }
+    .btn-save {
+        margin-top: 20px;
+    }
+</style>
+<div class="container">
+    
+    <form action="#" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="name">Nome</label>
+                <input class="form-control" type="text" id="name" name="name">
+            </div>           
+            <div class="col-md-6">
+                <label for="description">Descrição</label>
+                <input class="form-control" type="text" id="description" name="description">
+            </div>
+            <div class="col-md-6">
+                <label for="price">Preço</label>
+                <input class="form-control" type="text" id="price" name="price">
+            </div>
+            <div class="col-md-6">
+                <label for="quantity">Quantidade</label>
+                <input class="form-control" type="text" id="quantity" name="quantity">
+            </div>
+            <div class="col-md-6">
+                <label for="warranty">Garantia</label>
+                <input class="form-control" type="text" id="warranty" name="warranty">
+            </div>
+            <div class="col-md-6">
+                <label for="category">Categoria</label>
+                <select name="category_select" id="category_select" class="form-control">
+                    <option value="computador">Computador</option>
+                    <option value="celular">Celular</option>
+                    <option value="acessorios">Acessórios</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <div class="btn-save">
+                    <input class="form-control" type="submit" id="form_create_product_post" name="form_create_product_post">
+                </div>
+            </div>
+        </div>
+    </form>    
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $('#form_create_product_post').on('click', function(e){
+        e.preventDefault();
+        var create_product_data = {
+            'name': $('#name').val(),
+            'description': $('#description').val(),
+            'price': $('#price').val(),
+            'quantity': $('#quantity').val(),
+            'warranty': $('#warranty').val(),
+            'category': $('#category_select').val(),
+        }
+
+        $.ajax({
+            url: "{% url 'catalog:save_product' %}",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(create_product_data),
+            success: function(data){
+                if (data.status == 202){
+                    $('.btn-save').html('Cadastrando... <br/><div class="spinner"></div>');
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    }, 1000);
+                }
+                else {
+                    if (data.status == 502){
+                        alert(data.message);
+                    }
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        })
+    });
+</script>
+{% endblock %}

@@ -12,9 +12,9 @@ class Product(models.Model):
     )
     name = models.CharField('Nome', max_length=100)
     description = models.TextField('Descrição', blank=True)
-    price = models.DecimalField('Preço', decimal_places=3, max_digits=8)
+    price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
     quantity = models.PositiveIntegerField('Quantidade', default=1)
-    warranty = models.CharField('Garantia', max_length=2)
+    warranty = models.PositiveIntegerField('Garantia', default=1)
     category = models.CharField('Categoria', choices=CATEGORY_CHOICES, default='outros', max_length=15)
 
     created = models.DateTimeField('Criado em', auto_now_add=True)

@@ -3,7 +3,7 @@
 from django.urls import path
 
 from accounts.views import (
-    create_salesman, save_salesman, list_salesman
+    create_salesman, save_salesman, list_salesman,
     )
 
 app_name = 'accounts'

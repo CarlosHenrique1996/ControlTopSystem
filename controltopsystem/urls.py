@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from core.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
     path('', index, name="index"),
-    path('contas/', include('accounts.urls', namespace='accounts')),
-=======
->>>>>>> refs/remotes/origin/master
+    path('', include('accounts.urls', namespace='accounts')),
+    path('', include('catalog.urls', namespace='catalog')),
+    path('', include('sales.urls', namespace='sales')),
 ]

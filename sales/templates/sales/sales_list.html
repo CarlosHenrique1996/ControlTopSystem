@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo da venda</th>
+                <th>Tipo de pagamento</th>
+                <th>Nota fiscal</th>
+                <th>Vendedor</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales_list %}
+            <tr>
+                <th>{{ sale.pk }}</th>
+                <th>{{ sale.payment }}</th>
+                <th>{{ sale.invoice }}</th>
+                <th>{{ sale.salesman }}</th>
+                <th>{{ sale.created }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}
+
+

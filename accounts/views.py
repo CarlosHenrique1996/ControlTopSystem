@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
+from django.core import serializers
 
 from accounts.models import Salesman 
 
@@ -37,3 +38,4 @@ def save_salesman(request):
             return JsonResponse({ 'status': 202, 'message': 'Usuário cadastrado.', 'url': reverse('accounts:create_salesman') })
         except:
             return JsonResponse({ 'status': 502, 'message': 'Erro ao cadastrar!', 'url': reverse('accounts:create_salesman') })
+

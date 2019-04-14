@@ -3,24 +3,24 @@
 {% block content %}
 <div class="container">
     <table class="table">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>CPF</th>
-            <th>Vendas</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for salesman in salesmen %}
-        <tr>
-            <th>{{ salesman.name }}</th>
-            <td>{{ salesman.phone }}</td>
-            <td>{{ salesman.individual_registration }}</td>
-            <td>{{ salesman.total_sales }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>CPF</th>
+                <th>Vendas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for salesman in salesmen %}
+            <tr>
+                <th>{{ salesman.name }}</th>
+                <td>{{ salesman.phone }}</td>
+                <td>{{ salesman.individual_registration }}</td>
+                <td>{{ salesman.total_sales }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 {% endblock %}

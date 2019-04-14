@@ -35,9 +35,6 @@
             </div>
         </form>
     </div>
-    <article class="content">
-        Conteúdo
-    </article>
 </section>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -48,6 +45,7 @@
             'phone': $('#phone').val(),
             'individual_registration': $('#individual_registration').val()
         }
+        console.log(salesman_data);
         $.ajax({
             url: "{% url 'accounts:save_salesman' %}",
             type: "POST",
@@ -71,5 +69,6 @@
             }
         });
     });
+
 </script>
 {% endblock %}
