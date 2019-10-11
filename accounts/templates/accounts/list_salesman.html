@@ -1,7 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .create-product{
+        display: flex;
+        margin: 20px;
+    }
+    .header-page {
+    }
+    .header-page > p {
+        color: #000;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .header-page > a {
+        padding: 5px 15px;
+        background-color: #fff;
+        border: transparent;
+        border-radius: 5px;
+        color: #000;
+        font-weight: bold;
+        width: 170px;
+
+    }
+    </style>
+
 <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="create-product">
+               <div class="header-page">
+                   <p>Lista de Vendedores</p><a href="{% url 'accounts:create_salesman' %}" class="btn-create-product">cadastrar vendedor</a>
+               </div>
+            </div>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -9,6 +42,8 @@
                 <th>Telefone</th>
                 <th>CPF</th>
                 <th>Vendas</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +53,12 @@
                 <td>{{ salesman.phone }}</td>
                 <td>{{ salesman.individual_registration }}</td>
                 <td>{{ salesman.total_sales }}</td>
+                <td>
+                    <a href="{% url 'accounts:delete_salesman' salesman.pk %}"><i class="fas fa-trash-alt"></i></a>
+                </td>
+                <td>
+                    <a href="{% url 'accounts:update_salesman' salesman.pk %}"><i class="fas fa-pencil-alt"></i></a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

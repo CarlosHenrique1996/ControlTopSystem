@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section  id="main">
+    <div class="container">
+        <form action="{% url 'catalog:update_product_save' %}" method="post">
+            <div>
+                <h2>Alterar dados do Produto:</h2>
+                <br>
+                <h4>Produto: {{ product.name }}</h4>
+                <br>
+            </div>
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input class="form-control" type="text" id="name" name="name" value="{{ product.name}}">
+            </div>           
+            <div class="form-group">
+                <label for="description">Descrição</label>
+                <input class="form-control" type="text" id="description" name="description" value="{{ product.description}}">
+            </div>
+            <div class="form-group">
+                <label for="price">Preço</label>
+                <input class="form-control" type="text" id="price" name="price" value="{{product.price}}">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantidade</label>
+                <input class="form-control" type="text" id="quantity" name="quantity" value="{{product.quantity}}">
+            </div>
+            <div class="form-group">
+                <label for="warranty">Garantia</label>
+                <input class="form-control" type="text" id="warranty" name="warranty" value="{{product.warranty}}">
+            </div>
+            <div class="form-group">
+                <label for="category">Categoria</label>
+                <select name="category_select" id="category_select" class="form-control" value="{{product.category_select}}">
+                    <option value="computador">Computador</option>
+                    <option value="celular">Celular</option>
+                    <option value="acessorios">Acessórios</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
+            <div class="btn-save">
+                <input type="hidden" id="product_pk" name="product_pk" value="{{ product.pk }}" >
+                <input type="submit" class="form-control" value="Salvar" id="form_product_post">
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<!--
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+    $('#form_product_post').on('click', function(e){
+        e.preventDefault();
+        var update_product_data = {
+            'product_pk': $('#product_pk').val()
+        }
+        console.log(update_product_data);
+        $.ajax({
+            url: "{% url 'catalog:update_product_save' %}",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(product_data),
+            success: function(data){
+                console.log(data);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    });
+
+</script>
+-->
+{% endblock %}

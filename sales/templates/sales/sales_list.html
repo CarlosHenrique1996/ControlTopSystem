@@ -1,8 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .create-product{
+        display: flex;
+        margin: 20px;
+    }
+    .header-page {
+    }
+    .header-page > p {
+        color: #000;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .header-page > a {
+        padding: 5px 15px;
+        background-color: #fff;
+        border: transparent;
+        border-radius: 5px;
+        color: #000;
+        font-weight: bold;
+        width: 170px;
 
+    }
+</style>
 <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="create-product">
+                <div class="header-page">
+                    <p>Lista de Vendas</p><a href="{% url 'sales:sales_view' %}">ir para o caixa</a>
+                </div>
+             </div>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -11,6 +42,7 @@
                 <th>Nota fiscal</th>
                 <th>Vendedor</th>
                 <th>Data</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +52,10 @@
                 <th>{{ sale.payment }}</th>
                 <th>{{ sale.invoice }}</th>
                 <th>{{ sale.salesman }}</th>
-                <th>{{ sale.created }}</th>
+                <th>{{ sale.created }}</th>                
+                <td>
+                    <a href="{% url 'sales:sales_confirm' sale.pk %}"><i class="fas fa-clipboard"></i></a> 
+                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -29,5 +64,3 @@
 </div>
 
 {% endblock %}
-
-

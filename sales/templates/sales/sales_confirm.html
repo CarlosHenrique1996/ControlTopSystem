@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.cabecalho > p {
+    color: #000;
+    font-size: 22px;
+    font-weight: bold;
+}
+.cabecalho{
+    margin-left: 36px;
+    margin-top: 20px;
+}
+.lista{
+    margin-left: 100px;
+    width: 830px
+}
+.valortotal{
+    margin-left: 600px; 
+}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="cabecalho">
+            <p>Confirmação Da Compra</p>
+        </div>
+    </div>
+    <div>
+        <h6>Codigo da venda: {{ sales.pk }} </h6><br>
+    </div>
+
+    <div class="row">
+
+    <div class="row">
+        <div class="lista">
+            <div class="sales_confirm_list">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80%;">Produto</th>
+                            <th style="width: 5%;">Quantidade</th>
+                            <th style="width: 15%;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sales in salesitem %}
+                        <tr>
+                            <th>{{ sales.product }}</th>
+                            <th>{{ sales.quantity }}</th>
+                            <th>{{ sales.price }}</th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <hr>
+                <strong class="valortotal">Valor da Compra: {{ sales.pk }}</strong>
+            </div>
+            <div class="col-md-4">
+                Vendedor: {{ sales.salesman}}
+            </div>
+            <div class="col-md-4">
+                Forma de pagamento: {{ sales.payment }}
+            </div>
+            <div class="col-md-4">
+                Nota fiscal: {{ sales.invoice }}
+            </div>
+        </div> 
+    </div>
+
+</div>
+{% endblock %}

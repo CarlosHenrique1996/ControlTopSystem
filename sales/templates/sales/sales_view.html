@@ -7,40 +7,14 @@
     margin: 0;
     padding: 0;
 }
-.search_content_mobile {
-    width: 50%;
+.search_content{
+    width: 75%;
     margin: 0 auto;
     margin-top: 50px;
 }
-.search_content {
-    margin-top: 30px;
-    margin-left: 20px;
-}
-.search_content_mobile > p {
-    margin-bottom: 20px;
-    margin-left: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color:#000;
-    text-align: center;
-}
-.search_content_laptop > p {
-    margin-bottom: 20px;
-    margin-left: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color:#000;
-    text-align: center;
-}
-.search_content_acessories > p {
-    margin-bottom: 20px;
-    margin-left: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color:#000;
-    text-align: center;
-}
-.search_content_others > p {
+
+
+.search_content > p {
     margin-bottom: 20px;
     margin-left: 20px;
     font-size: 18px;
@@ -58,6 +32,7 @@
     text-align: center;
     cursor: pointer;
     margin: 10px 0;
+    
 }
 .sales_content {
     width: 80%;
@@ -85,18 +60,6 @@
     color: #000;
 }
 
-#search_mobile_submit {
-    margin-top: 10px;
-}
-#search_laptop_submit {
-    margin-top: 10px;
-}
-#search_acessories_submit {
-    margin-top: 10px;
-}
-#search_others_submit {
-    margin-top: 10px;
-}
 .btn-check {
     background-color: green;
     border-radius: 5px;
@@ -109,12 +72,11 @@
     background-color: transparent;
 }
 .form_submit {
-    width: 80%;
+    width: 75%;
     margin: 0 auto;
     margin-top: 40px;
 }
 #fa-mobile, #fa-laptop, #fa-keyboard, #fa-clone {
-    cursor: pointer;
     padding: 20px;
 }
 #fa-mobile:hover, #fa-laptop:hover, #fa-keyboard:hover, #fa-clone:hover {
@@ -122,23 +84,28 @@
     border-radius: 20px;
 
 }
-.checkout_button {
-        padding: 10px;
-        margin-bottom: 60px;
-        display: flex;
-        justify-content: center;
-    }
-.checkout_button > a {
-    background-color: green;
-    color: #fff;
-    border: transparent;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    text-align: center;
-    width: 25%;
+.salesman_select_option {
+    width: 75%;
     margin: 0 auto;
 }
+#checkout_button {
+    background-color: red;
+    border: transparent;
+    color: #fff;
+    font-weight: bold;
+}
+.bag_list {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.bag_list > h3 {
+    font-weight: bold;
+    font-size: 14px;
+}
+
 </style>
 
 <div class="container">
@@ -147,123 +114,187 @@
             <div class="col-md-3">
                 <div id="fa-mobile">
                     <p><i class="fas fa-mobile-alt"></i></p>
+                    <p><strong>Celulares</strong></p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div id="fa-laptop">
                     <p><i class="fas fa-laptop-code"></i></p>
+                    <p><strong>Computadores</strong></p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div id="fa-keyboard">
-                    <p><i class="fas fa-keyboard"></i></p>  
+                    <p><i class="fas fa-keyboard"></i></p> 
+                    <p><strong>Acessórios</strong></p> 
                 </div>
             </div>
             <div class="col-md-3">
                 <div id="fa-clone">
-                    <p><i class="far fa-clone"></i></p>    
+                    <p><i class="far fa-clone"></i></p>   
+                    <p><strong>Outros</strong></p> 
                 </div>
             </div>
         </div>
     </div>
-    <div id="content_mobile" style="display: none;">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="search_content_mobile">
-                    <p>Olá, qual o modelo que você procura?</p>
-                    <form role="search" action="{% url 'sales:sales_view' %}">        
-                        <input name="search_mobile" type="text" class="form-control" id="search_mobile" placeholder="Procure um celular...">
-                        <input type="submit" class="form-control" value="Pesquisar" id="search_mobile_submit">
-                    </form>
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="search_content">
+                <p>Olá, o que você procura?</p>
+                <form role="search" action="{% url 'sales:sales_view' %}">        
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input name="q" type="text" class="form-control" id="search" placeholder="Procure algo...">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="submit" class="form-control" value="Pesquisar" id="search_submit">
+                        </div> 
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        {% if search_mobile %}
-        <div class="form_submit">
-            <form action="" method="post">
+    {% if q %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form_submit">
+                <form action="" method="post">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="margin-top: 8px;">Nome:</th>
                                 <th style="margin-top: 8px;">Preço:</th>
                                 <th style="margin-top: 8px;">Garantia: </th>
-                                <th style="margin-top: 8px;">Estoque (qtd):</th>
                                 <th style="width: 10%;"></th>
                                 <th style="width: 10%;"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for mobile in list_mobile %}
+                            {% for product in products %}
                             <tr>
-                                <th>{{ mobile.name }}</th>
-                                <th>{{ mobile.price }}</th>
-                                <th>{{ mobile.warranty }}</th>
-                                <th>{{ mobile.quantity }}</th>
+                                <th>{{ product.name }}</th>
+                                <th>{{ product.price }}</th>
+                                <th>{{ product.warranty }}</th>
                                 <th>
-                                    <input type="text" class="form-control" id="quantity_product" style="margin-top: -8px;">
+                                    <input type="text" class="form-control" id="{{ product.pk }}-quantity_product" style="margin-top: -8px;">
                                 </th>
                                 <th>
-                                    <input type="hidden" value="{{ mobile.pk }}" id="mobile_pk">
-                                    <input href="#" class="btn-check" type="submit" id="{{ mobile.pk }}-create_bag_submit" value="adicionar">
+                                    <input type="hidden" value="{{ product.pk }}" id="{{ product.pk }}-product_pk" placeholder="{{ product.pk }}">
+                                    <input href="#" class="btn-check" type="submit" id="{{ product.pk }}-create_bag_submit" value="adicionar">
                                 </th>
                             </tr>
                             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-                            <script type="text/javascript">
-                                $('#{{ mobile.pk }}-create_bag_submit').on('click', function(e){
+                            <script>
+                                $('#{{ product.pk }}-create_bag_submit').on('click', function(e){
                                     e.preventDefault();
-                                    var bag_data = {
-                                        'mobile_pk': $('#mobile_pk').val(),
-                                        'quantity': $('#quantity_product').val()
+                                    var product_data = {
+                                        'product_pk': $('#{{ product.pk }}-product_pk').val(),
+                                        'quantity_product': $('#{{ product.pk }}-quantity_product').val(),
                                     }
+                                    console.log(product_data);
                                     $.ajax({
-                                        url: "{% url 'sales:create_bag_mobile' %}",
-                                        type: 'POST',
-                                        contentType: 'application/json',
-                                        data: JSON.stringify(bag_data),
+                                        url: "{% url 'sales:create_bag_product' %}",
+                                        type: "POST",
+                                        contentType: "application/json",
+                                        data: JSON.stringify(product_data),
                                         success: function(data){
                                             console.log(data);
+                                            window.location.href = "{% url 'sales:sales_view' %}";
                                         },
                                         error: function(data){
                                             console.log(data);
                                         }
-                                    })
+                                    });
                                 });
+                            
                             </script>
                             {% endfor %}
                         </tbody>
                     </table>
                 </form>
-                <div class="checkout_button">
-                    <a href="{% url 'sales:bag_list' %}" class="form-control">IR PRA SACOLA</a>
-                </div>
             </div>
-        {% endif %}
+        </div>
     </div>
+    {% endif %}
+    {% if bag_list %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bag_list">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Produto</th>
+                            <th style="width: 5%;">Quantidade</th>
+                            <th style="width: 80%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bag in bag_list %}
+                        <tr>
+                            <th>{{ bag.product.name }}</th>
+                            <th>{{ bag.quantity }}</th>
+                            <th style="float: right;"><a href="{% url 'sales:delete_bag_item' bag.pk %}"><i class="fas fa-trash-alt"></i></a></th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+        <div class="col-md-12">
+            <div class="salesman_select_option">
+                <form action="" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select name="salesman_select" id="salesman_select" class="form-control">
+                                {% for salesman in salesmen %}
+                                <option value="{{ salesman.pk }}"> {{ salesman.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="payment_select" id="payment_select" class="form-control">
+                                <option value="cartao">Credito</option>
+                                <option value="debito">Débito</option>
+                                <option value="dinheiro">Dinheiro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input href="#" class="form-control" type="submit" id="checkout_button" value="finalizar venda">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="bag_list">
+        <h3>Não há itens na sacola.</h3>
+    </div>
+    {% endif %}
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$('#fa-mobile').on('click', function(e){
-    if ($("#content_mobile").is(":visible")){
+    $('#checkout_button').on('click', function(e){
         e.preventDefault();
-        $("#content_mobile").hide();
-    } else {
-        e.preventDefault();
-        $("#content_mobile").show();
-    }
-});
-
-$('#fa-laptop').on('click', function(){
-    
-});
-$('#fa-keyboard').on('click', function(){
-    
-});
-$('#fa-clone').on('click', function(){
-    
-});
+        var salesman_data = {
+            'salesman': $('#salesman_select').val(),
+            'payment': $('#payment_select').val()
+            }
+        console.log(salesman_data);
+        $.ajax({
+            url: "{% url 'sales:create_sale_view' %}",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(salesman_data),
+            success: function(data){
+                window.location.reload()
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    });
 </script>
 {% endblock %}
 

@@ -80,12 +80,8 @@ WSGI_APPLICATION = 'controltopsystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'controltopsyst',
-        'USER': 'controltopsyst',
-        'PASSWORD': 'carlos452535',
-        'HOST': 'mysql.controltopsystem.kinghost.net',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

@@ -17,7 +17,7 @@
 </style>
 <section  id="main">
     <div class="container">
-        <form action="#" method="post">
+        <form action="{% url 'accounts:save_salesman' %}" method="post">
             <div class="form-group">
                 <label for="name">Usuário:</label>
                 <input class="form-control" type="text" id="name" name="name">
@@ -37,7 +37,7 @@
     </div>
 </section>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
+<!--<script>
     $('#form_salesman_post').on('click', function(e){
         e.preventDefault();
         var salesman_data = {
@@ -45,13 +45,13 @@
             'phone': $('#phone').val(),
             'individual_registration': $('#individual_registration').val()
         }
-        console.log(salesman_data);
         $.ajax({
             url: "{% url 'accounts:save_salesman' %}",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(salesman_data),
             success: function(data){
+                console.log(data);
                 if (data.status == 202){
                     $('.btn-save').html('Cadastrando... <br/><div class="spinner"></div>');
                     setTimeout(function(){
@@ -70,5 +70,5 @@
         });
     });
 
-</script>
+</script>-->
 {% endblock %}

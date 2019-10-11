@@ -2,7 +2,7 @@
 
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
@@ -13,74 +13,72 @@ from sales.models import Sales, SalesItem, Bag
 from catalog.models import Product
 from accounts.models import Salesman
 
+from sales.checkout import Checkout
+
+checkout = Checkout()
+
 def sales_view(request):
-    search_mobile = request.GET.get('search_mobile', '')
-    list_mobile = None
+    q = request.GET.get('q', '')
+    products = None
+    if q:
+        products = Product.objects.filter(category__in=['celular', 'computador', 'acessorios', 'outros']).filter(models.Q(name__icontains=q))
 
-    search_laptop = request.GET.get('search_laptop', '')
-    list_laptop = None
-
-    search_acessories = request.GET.get('search_acessories', '')
-    list_acessories = None
-
-    search_others = request.GET.get('search_others', '')
-    list_others = None
-
-    if search_mobile:
-        list_mobile = Product.objects.filter(category='celular').filter(models.Q(name__icontains=search_mobile))
-
-    if search_laptop:
-        list_laptop = Product.objects.filter(category='computador').filter(models.Q(name__icontains=search_laptop))
-
-    if search_acessories:
-        list_acessories = Product.objects.filter(category='acessorios').filter(models.Q(name__icontains=search_acessories))
-
-    if search_others:
-        list_others = Product.objects.filter(category='outros').filter(models.Q(name__icontains=search_others))
+    bag_list = Bag.objects.all()
 
     return render(request, 'sales/sales_view.html', context={
+        'q': q,
         'salesmen': Salesman.objects.all(),
-        'search_mobile': search_mobile,
-        'list_mobile': list_mobile,
-
-        'search_laptop': search_laptop,
-        'list_laptop': list_laptop,
-
-        'search_acessories': search_acessories,
-        'list_acessories': list_acessories,
-
-        'search_others': search_others,
-        'list_others': list_others,
+        'bag_list': bag_list,
+        'products': products,
     })
 
 def sales_list(request):
     sales_list = Sales.objects.all()
-    return render(request, 'sales/sales_list.html', context={
-        'sales_list': sales_list,
+    return render(request, 'sales/sales_list.html', context={'sales_list': sales_list})
+
+@csrf_exempt
+def create_bag_product(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        bag = Bag()
+        bag.product = Product.objects.get(pk=data.get('product_pk'))
+        bag.quantity = int(data.get('quantity_product'))
+        bag.save()
+        return redirect('sales:sales_view')
+
+def delete_bag_item(request, pk):
+    Bag.objects.filter(pk=pk).delete()
+    return redirect('sales:sales_view')
+
+def sales_confirm(request,pk):
+    sales = Sales.objects.get(pk=pk)    
+    salesitem = SalesItem.objects.filter(sales__pk=pk) 
+    
+    return render(request, 'sales/sales_confirm.html', context={
+        'sales':sales,
+        'salesitem':salesitem,
     })
 
 @csrf_exempt
-def create_bag_mobile(request):
+def create_sale_view(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-
-        product_pk = data.get('mobile_pk')
-        quantity = data.get('quantity')    
-
-        product = Product.objects.get(pk=product_pk)
-        try:
-            bag = Bag()
-            bag.product = product
-            bag.quantity = int(quantity)
-            bag.save()
-            return JsonResponse({ 'status': 202, 'message': 'Item criado na sacola.' })
-        except:
-            return JsonResponse({ 'status': 502, 'message': 'Erro ao criar o item na sacola.' })
-
-def bag_list(request):
-    bag_list = Bag.objects.all()
-    salesmen = Salesman.objects.all()
-    return render(request, 'bag/bag_list.html', context={
-        'bag_list': bag_list,
-        'salesmen': salesmen
-    })
+        salesman_pk = data.get('salesman')
+        payment = data.get('payment')
+        bag = Bag.objects.all()
+        sale = checkout.create_sale(salesman_pk, payment)
+        if sale['status'] == 202:
+            for i in range(0, bag.count()):
+                sale_item = checkout.create_sale_item(sale['sale_pk'], bag[i].product, bag[i].quantity)
+                if sale_item['status'] == 202:
+                    pass
+                else:
+                    return HttpResponse('erro ao criar o item da venda.')
+        else:
+            return HttpResponse('erro ao criar a venda')
+        if sale['status'] == 202 and sale_item['status'] == 202:
+            bag.delete()
+            return JsonResponse({'status': 202, 'url': 'teste'})
+        else:
+            return HttpResponse('erro ao realizar a venda.')
+        return JsonResponse({ 'data': data })

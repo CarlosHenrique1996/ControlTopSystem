@@ -24,8 +24,14 @@ class Bag(models.Model):
 
 class Sales(models.Model):
     
+    PAYMENT_CHOICES = (
+        ('cartao', 'Cartão de Crédito'),
+        ('debito', 'Cartão de Débito'),
+        ('dinheiro', 'Dinheiro'),
+    )
+
     salesman = models.ForeignKey('accounts.Salesman', verbose_name='Vendedor', on_delete=models.CASCADE, null=True)
-    payment = models.CharField('Forma de Pagamento', max_length=100)
+    payment = models.CharField('Forma de Pagamento', choices=PAYMENT_CHOICES, default='dinheiro', max_length=100)
     invoice = models.BooleanField('Nota Fiscal', default=False)
     
     created = models.DateTimeField('Criado em', auto_now_add=True)
@@ -40,7 +46,6 @@ class Sales(models.Model):
 
 class SalesItem(models.Model):
 
-    salesman = models.ForeignKey('accounts.Salesman', verbose_name='Vendedor', on_delete=models.CASCADE, null=True)
     sales = models.ForeignKey('sales.Sales', on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey('catalog.Product', on_delete=models.CASCADE, verbose_name='Produto')
     quantity = models.PositiveIntegerField('Quantidade', default=1) 
